@@ -25,6 +25,24 @@
     }
     #app { width: 100%; max-width: 460px; padding: 0 18px 60px; }
 
+    /* onboarding */
+    .onboarding {
+      min-height: 100dvh; display: flex; flex-direction: column;
+      justify-content: center; padding: 40px 0;
+    }
+    .onb-wordmark { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 52px; letter-spacing: 2px; line-height: 1; margin-bottom: 8px; }
+    .onb-wordmark span { color: var(--red); }
+    .onb-sub { font-size: 15px; color: var(--muted); margin-bottom: 48px; line-height: 1.5; }
+    .onb-steps { display: flex; flex-direction: column; gap: 22px; margin-bottom: 48px; }
+    .onb-step { display: flex; align-items: flex-start; gap: 14px; }
+    .onb-arrow { color: var(--red); font-family: 'Oswald', sans-serif; font-size: 18px; margin-top: 2px; flex-shrink: 0; }
+    .onb-text { font-size: 16px; line-height: 1.5; }
+    .onb-diag {
+      position: fixed; top: -60px; right: -80px;
+      width: 220px; height: 220px; background: var(--red);
+      transform: rotate(33deg); opacity: .85; pointer-events: none;
+    }
+
     /* header */
     .header { position: relative; padding: 36px 0 22px; overflow: hidden; }
     .diag {
@@ -91,6 +109,7 @@
       width: 34px; height: 34px; border-radius: 9px;
       font-size: 20px; border: none; cursor: pointer; flex-shrink: 0;
     }
+    .card-actions { display: flex; gap: 6px; flex-shrink: 0; }
 
     /* review screen */
     .review-root { padding-top: 6px; }
@@ -128,17 +147,15 @@
 
 <script>
 const STORAGE_KEY = 'vocab_words_v2';
+const ONBOARDING_KEY = 'vocab_onboarding_done';
 
-// --- date helpers ---
 const fmt = d => d.toISOString().slice(0,10);
 const todayStr = () => fmt(new Date());
 const addDaysStr = n => { const d = new Date(); d.setDate(d.getDate()+n); return fmt(d); };
 
-// --- storage (localStorage for PWA) ---
 const load = () => { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); } catch(e){ return []; } };
 const save = w => localStorage.setItem(STORAGE_KEY, JSON.stringify(w));
 
-// --- SRS ---
 function applySrs(card, grade) {
   let ease = card.ease??2.5, interval = card.interval??1, streak = card.success_streak??0;
   if (grade==='forgot') { ease=Math.max(1.3,ease-.2); interval=1; streak=0; }
@@ -147,14 +164,12 @@ function applySrs(card, grade) {
   return {...card, ease, interval, success_streak:streak, last_reviewed_at:todayStr(), next_review_date:addDaysStr(interval)};
 }
 
-// --- matching ---
 const norm = s => (s||'').toLowerCase().replace(/ё/g,'е').replace(/[.,;!?"'`]/g,'').trim();
 function isMatch(ans, tr) {
   if (!norm(ans)) return false;
   return norm(tr).split(/[,/]| или /).map(s=>s.trim()).filter(Boolean).some(m=>m&&(m.includes(norm(ans))||norm(ans).includes(m)));
 }
 
-// --- translate via our API route ---
 async function translate(word) {
   const res = await fetch('/api/translate', {
     method:'POST',
@@ -165,20 +180,18 @@ async function translate(word) {
   return res.json();
 }
 
-// --- STATE ---
 let words = load();
-let screen = 'input';
+let screen = localStorage.getItem(ONBOARDING_KEY) ? 'input' : 'onboarding';
 let session = null;
 
-const $ = id => document.getElementById(id);
 const app = document.getElementById('app');
 
-// --- RENDER ---
 function render() {
   const dueCount = words.filter(w=>!w.loading&&(w.next_review_date||'9999')<=todayStr()).length;
   app.innerHTML = '';
 
-  // header
+  if (screen==='onboarding') { renderOnboarding(); return; }
+
   const header = el('header','header');
   header.innerHTML = `
     <div class="diag"></div>
@@ -194,8 +207,30 @@ function render() {
   else if (screen==='review') renderReview();
 }
 
+function renderOnboarding() {
+  const root = el('div','onboarding');
+  root.innerHTML = `
+    <div class="onb-diag"></div>
+    <div class="onb-wordmark">СЛОВА<span>.</span></div>
+    <div class="onb-sub">Приложение для слов из сериалов и фильмов</div>
+    <div class="onb-steps">
+      <div class="onb-step"><div class="onb-arrow">→</div><div class="onb-text">Встретил незнакомое слово — введи сюда</div></div>
+      <div class="onb-step"><div class="onb-arrow">→</div><div class="onb-text">Получи перевод моментально</div></div>
+      <div class="onb-step"><div class="onb-arrow">→</div><div class="onb-text">Открывай когда хочешь и повторяй — без уведомлений и чувства вины</div></div>
+    </div>`;
+  const btn = el('button','btn-review');
+  btn.textContent = 'НАЧАТЬ →';
+  btn.style.marginTop = '0';
+  btn.onclick = () => {
+    localStorage.setItem(ONBOARDING_KEY, '1');
+    screen = 'input';
+    render();
+  };
+  root.appendChild(btn);
+  app.appendChild(root);
+}
+
 function renderInput(dueCount) {
-  // input row
   const wrap = el('div','input-wrap');
   const inp = document.createElement('input');
   inp.type='text'; inp.placeholder='english word…'; inp.id='word-input';
@@ -205,22 +240,19 @@ function renderInput(dueCount) {
   wrap.appendChild(inp); wrap.appendChild(btn);
   app.appendChild(wrap);
 
-  // flash
   const flash = el('div','flash'); flash.id='flash';
   app.appendChild(flash);
 
-  // review button
   const rb = el('button','btn-review');
   rb.textContent = dueCount>0 ? `ПОВТОРИТЬ · ${dueCount}` : 'НЕТ СЛОВ НА ПОВТОР';
   rb.disabled = dueCount===0;
   rb.onclick = startReview;
   app.appendChild(rb);
 
-  // list
   const list = el('div','list');
   if (words.length===0) {
     const empty = el('div','empty');
-    empty.textContent='кидай слова из сериала — перевод подтянется сам, вечером жми повторить.';
+    empty.textContent='введи слово из сериала — перевод подтянется сам, вечером жми повторить.';
     list.appendChild(empty);
   } else {
     words.forEach((w,i) => {
@@ -237,10 +269,22 @@ function renderInput(dueCount) {
         main.appendChild(tr);
       }
       card.appendChild(main);
-      const actionBtn = el('button', w.error?'btn-mini':'btn-ghost');
-      actionBtn.textContent = w.error?'↻':'×';
-      actionBtn.onclick = w.error ? ()=>retryWord(w.id) : ()=>removeWord(w.id);
-      card.appendChild(actionBtn);
+
+      // actions: retry if error, always show delete
+      const actions = el('div','card-actions');
+      if (w.error) {
+        const retryBtn = el('button','btn-mini');
+        retryBtn.textContent='↻';
+        retryBtn.onclick=()=>retryWord(w.id);
+        actions.appendChild(retryBtn);
+      }
+      if (!w.loading) {
+        const delBtn = el('button','btn-ghost');
+        delBtn.textContent='×';
+        delBtn.onclick=()=>removeWord(w.id);
+        actions.appendChild(delBtn);
+      }
+      card.appendChild(actions);
       list.appendChild(card);
     });
   }
@@ -289,7 +333,7 @@ function renderReview() {
     iw.appendChild(ai); iw.appendChild(cb);
     rc.appendChild(iw);
   } else {
-    const {correct,grade} = session.result;
+    const {correct} = session.result;
     const rev = el('div','reveal');
     rev.innerHTML = `
       <div class="verdict">${correct?'<span style="color:var(--gold)">✓ верно</span>':'<span style="color:var(--red)">✗ не угадано</span>'}</div>
@@ -314,7 +358,6 @@ function renderReview() {
   if (ri) setTimeout(()=>ri.focus(),50);
 }
 
-// --- ACTIONS ---
 async function addWord() {
   const inp = document.getElementById('word-input');
   if (!inp) return;
@@ -371,13 +414,13 @@ function checkAnswer() {
   const card = session.cards[session.idx];
   const elapsed = Date.now()-session.shownAt;
   const correct = isMatch(answer, card.translation_ru);
-  const grade = !correct?'forgot': elapsed<=5000?'easy':'hard';
+  const grade = !correct?'forgot': elapsed<=15000?'easy':'hard';
   session = {...session, revealed:true, answer, result:{correct,grade,elapsed,overridden:false}};
   render();
 }
 
 function overrideGrade() {
-  session = {...session, result:{...session.result, correct:true, grade:'hard', overridden:true}};
+  session = {...session, result:{...session.result, correct:true, grade:'easy', overridden:true}};
   render();
 }
 
@@ -406,7 +449,6 @@ function showFlash(msg) {
 
 function el(tag, cls) { const e=document.createElement(tag); if(cls) e.className=cls; return e; }
 
-// init
 render();
 </script>
 </body>

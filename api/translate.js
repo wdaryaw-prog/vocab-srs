@@ -7,8 +7,9 @@ export default async function handler(req, res) {
   if (!word) return res.status(400).json({ error: 'No word provided' });
 
   const prompt = `You are a translation assistant for a Russian speaker learning English from TV shows. For the English word or phrase below, respond with ONLY a JSON object and nothing else — no markdown, no backticks, no commentary:
-{"translation_ru":"...","transcription":"...","example_en":"...","example_ru":"..."}
+{"word_en":"...","translation_ru":"...","transcription":"...","example_en":"...","example_ru":"..."}
 Rules:
+- word_en: the correct spelling of the input word or phrase. If the input has a typo or misspelling, return the corrected version. If correct, return as-is.
 - translation_ru: concise natural Russian translation, 1-3 core everyday meanings separated by commas. No dictionary dump.
 - transcription: IPA in slashes.
 - example_en: one short natural English sentence using the word in everyday spoken context.

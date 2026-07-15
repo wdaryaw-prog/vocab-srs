@@ -377,7 +377,7 @@ async function addWord() {
 
   try {
     const t = await translate(raw);
-    words = words.map(w=>w.id===id?{...w,...t,loading:false}:w);
+    words = words.map(w=>w.id===id?{...w,...t,word_en:t.word_en||w.word_en,loading:false}:w);
     save(words); render();
   } catch(e) {
     words = words.map(w=>w.id===id?{...w,translation_ru:'ошибка перевода',loading:false,error:true}:w);

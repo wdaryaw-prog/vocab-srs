@@ -259,7 +259,7 @@ function renderReview() {
     ai.addEventListener('keydown', e=>{ if(e.key==='Enter') checkAnswer(); });
     const cb = el('button','btn-add'); cb.textContent='→'; cb.onclick=checkAnswer;
     // кнопка «не знаю»
-    const sk = el('button','btn-skip'); sk.textContent='?'; sk.title='не знаю'; sk.onclick=skipCard;
+    const sk = el('button','btn-skip'); sk.textContent='🤷'; sk.title='не знаю'; sk.onclick=skipCard;
     iw.appendChild(ai); iw.appendChild(cb); iw.appendChild(sk);
     rc.appendChild(iw);
   } else {
@@ -376,47 +376,57 @@ function showCorrectionPrompt(id, original, corrected) {
   const f = document.getElementById("flash");
   if (!f) return;
   f.innerHTML = "";
-  f.style.cssText = "display:flex;flex-direction:column;gap:8px;padding:10px 0;";
+  f.style.cssText = "display:flex;flex-direction:column;gap:10px;padding:10px 0;";
+  const dismiss = () => { f.innerHTML = ""; f.style.cssText = ""; };
 
-  // строка 1: что было исправлено
+  // строка 1: вопрос
   const row1 = document.createElement("div");
-  row1.style.cssText = "font-size:13px;color:var(--gold);";
-  row1.textContent = `исправлено: ${original} → ${corrected}`;
+  row1.style.cssText = "font-size:14px;color:var(--gold);";
+  row1.textContent = `может быть, ${corrected}?`;
   f.appendChild(row1);
 
-  // строка 2: поле «что имела в виду» + кнопка сохранить
+  // строка 2: да / нет
   const row2 = document.createElement("div");
-  row2.style.cssText = "display:flex;gap:6px;align-items:center;";
-  const inp = document.createElement("input");
-  inp.type = "text";
-  inp.placeholder = "что имела в виду?";
-  inp.value = original;
-  inp.style.cssText = "flex:1;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px;color:var(--text);font-family:inherit;outline:none;";
-  const saveBtn = document.createElement("button");
-  saveBtn.textContent = "сохранить";
-  saveBtn.style.cssText = "background:var(--red);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;";
-  const dismiss = () => { f.innerHTML = ""; f.style.cssText = ""; };
-  saveBtn.onclick = () => {
-    const val = inp.value.trim();
-    if (val) {
-      words = words.map(w => w.id===id ? {...w, word_en:val} : w);
-      save(words); render();
-    }
-    dismiss();
+  row2.style.cssText = "display:flex;gap:8px;";
+
+  const yesBtn = document.createElement("button");
+  yesBtn.textContent = "да";
+  yesBtn.style.cssText = "background:var(--red);color:#fff;border:none;border-radius:8px;padding:7px 18px;font-size:14px;cursor:pointer;font-family:inherit;";
+  yesBtn.onclick = dismiss; // corrected уже сохранён
+
+  const noBtn = document.createElement("button");
+  noBtn.textContent = "нет";
+  noBtn.style.cssText = "background:var(--surface2);color:var(--muted);border:none;border-radius:8px;padding:7px 18px;font-size:14px;cursor:pointer;font-family:inherit;";
+  noBtn.onclick = () => {
+    row2.remove();
+    // показываем инпут
+    const row3 = document.createElement("div");
+    row3.style.cssText = "display:flex;gap:6px;align-items:center;";
+    const inp = document.createElement("input");
+    inp.type = "text";
+    inp.placeholder = "что имела в виду?";
+    inp.setAttribute("autocapitalize","none"); inp.setAttribute("autocorrect","off"); inp.setAttribute("spellcheck","false");
+    inp.style.cssText = "flex:1;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px;color:var(--text);font-family:inherit;outline:none;";
+    const saveBtn = document.createElement("button");
+    saveBtn.textContent = "→";
+    saveBtn.style.cssText = "background:var(--red);color:#fff;border:none;border-radius:8px;width:36px;height:36px;font-size:18px;cursor:pointer;flex-shrink:0;";
+    const doSave = () => {
+      const val = inp.value.trim();
+      if (val) {
+        words = words.map(w => w.id===id ? {...w, word_en:val} : w);
+        save(words); render();
+      }
+      dismiss();
+    };
+    saveBtn.onclick = doSave;
+    inp.addEventListener("keydown", e => { if (e.key==="Enter") doSave(); if (e.key==="Escape") dismiss(); });
+    row3.appendChild(inp); row3.appendChild(saveBtn);
+    f.appendChild(row3);
+    setTimeout(() => inp.focus(), 50);
   };
-  inp.addEventListener("keydown", e => { if (e.key==="Enter") saveBtn.click(); if (e.key==="Escape") dismiss(); });
-  row2.appendChild(inp); row2.appendChild(saveBtn);
+
+  row2.appendChild(yesBtn); row2.appendChild(noBtn);
   f.appendChild(row2);
-
-  // строка 3: оставить исправленный вариант
-  const row3 = document.createElement("div");
-  const keepBtn = document.createElement("button");
-  keepBtn.textContent = `оставить ${corrected}`;
-  keepBtn.style.cssText = "background:transparent;color:var(--muted);border:none;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;padding:0;";
-  keepBtn.onclick = dismiss;
-  row3.appendChild(keepBtn);
-  f.appendChild(row3);
-
   setTimeout(dismiss, 12000);
 }
 

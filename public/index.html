@@ -296,10 +296,13 @@ async function addWord() {
     showFlash('уже есть · '+words.find(w=>w.word_en.toLowerCase()===raw.toLowerCase()).translation_ru); return;
   }
   const id = Date.now().toString();
-  const card = {id, word_en:raw, translation_ru:'…', transcription:'', example_en:'', example_ru:'', loading:true, created_at:todayStr(), next_review_date:addDaysStr(1), last_reviewed_at:null, ease:2.5, interval:1, success_streak:0};
+  const card = {id, word_en:raw, translation_ru:'…', transcription:'', example_en:'', example_ru:'', loading:true, created_at:todayStr(), next_review_date:todayStr(), last_reviewed_at:null, ease:2.5, interval:1, success_streak:0};
   words = [card,...words]; save(words); render();
   try {
     const t = await translate(raw);
+    const corrected = t.word_en && t.word_en.toLowerCase() !== raw.toLowerCase();
+    words = words.map(w=>w.id===id?{...w,...t,word_en:t.word_en||w.word_en,loading:false}:w);
+    if (corrected) showCorrectionPrompt(id, raw, t.word_en);
     words = words.map(w=>w.id===id?{...w,...t,word_en:t.word_en||w.word_en,loading:false}:w);
   } catch(e) {
     words = words.map(w=>w.id===id?{...w,translation_ru:'ошибка перевода',loading:false,error:true}:w);
@@ -366,6 +369,24 @@ function nextCard() {
 function showFlash(msg) {
   const f = document.getElementById('flash');
   if (f) { f.textContent=msg; setTimeout(()=>{ if(f) f.textContent=''; },2200); }
+}
+
+function showCorrectionPrompt(id, original, corrected) {
+  const f = document.getElementById("flash");
+  if (!f) return;
+  f.innerHTML = "";
+  const msg = document.createElement("span");
+  msg.textContent = `исправлено: ${original} → ${corrected}  `;
+  const keepBtn = document.createElement("button");
+  keepBtn.textContent = "оставить " + original;
+  keepBtn.style.cssText = "background:var(--surface2);color:var(--muted);border:none;border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;font-family:inherit;";
+  keepBtn.onclick = () => {
+    words = words.map(w => w.id===id ? {...w, word_en:original} : w);
+    save(words); f.innerHTML = ""; render();
+  };
+  f.appendChild(msg);
+  f.appendChild(keepBtn);
+  setTimeout(() => { if(f) f.innerHTML = ""; }, 6000);
 }
 
 function el(tag, cls) { const e=document.createElement(tag); if(cls) e.className=cls; return e; }

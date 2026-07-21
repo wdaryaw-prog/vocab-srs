@@ -25,11 +25,7 @@
     }
     #app { width: 100%; max-width: 460px; padding: 0 18px 60px; }
 
-    /* onboarding */
-    .onboarding {
-      min-height: 100dvh; display: flex; flex-direction: column;
-      justify-content: center; padding: 40px 0;
-    }
+    .onboarding { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; padding: 40px 0; }
     .onb-wordmark { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 52px; letter-spacing: 2px; line-height: 1; margin-bottom: 8px; }
     .onb-wordmark span { color: var(--red); }
     .onb-sub { font-size: 15px; color: var(--muted); margin-bottom: 48px; line-height: 1.5; }
@@ -37,81 +33,39 @@
     .onb-step { display: flex; align-items: flex-start; gap: 14px; }
     .onb-arrow { color: var(--red); font-family: 'Oswald', sans-serif; font-size: 18px; margin-top: 2px; flex-shrink: 0; }
     .onb-text { font-size: 16px; line-height: 1.5; }
-    .onb-diag {
-      position: fixed; top: -60px; right: -80px;
-      width: 220px; height: 220px; background: var(--red);
-      transform: rotate(33deg); opacity: .85; pointer-events: none;
-    }
+    .onb-diag { position: fixed; top: -60px; right: -80px; width: 220px; height: 220px; background: var(--red); transform: rotate(33deg); opacity: .85; pointer-events: none; }
 
-    /* header */
     .header { position: relative; padding: 36px 0 22px; overflow: hidden; }
-    .diag {
-      position: absolute; top: -40px; right: -60px;
-      width: 180px; height: 180px; background: var(--red);
-      transform: rotate(33deg); opacity: .9;
-    }
+    .diag { position: absolute; top: -40px; right: -60px; width: 180px; height: 180px; background: var(--red); transform: rotate(33deg); opacity: .9; }
     .header-top { display: flex; justify-content: space-between; align-items: flex-start; position: relative; }
     .wordmark { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 46px; letter-spacing: 2px; line-height: 1; }
     .wordmark span { color: var(--red); }
     .stats { font-size: 13px; color: var(--muted); margin-top: 6px; letter-spacing: .3px; }
     .stats b { color: var(--gold); }
 
-    /* input */
     .input-wrap { display: flex; gap: 8px; margin-bottom: 4px; }
-    input[type=text] {
-      flex: 1; background: var(--surface); border: 1px solid var(--line);
-      border-radius: 12px; padding: 15px 16px; font-size: 17px;
-      color: var(--text); font-family: 'Golos Text', sans-serif; outline: none;
-    }
+    input[type=text] { flex: 1; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 15px 16px; font-size: 17px; color: var(--text); font-family: 'Golos Text', sans-serif; outline: none; }
     input[type=text]::placeholder { color: #6b6258; }
-    .btn-add {
-      width: 52px; background: var(--red); color: #fff;
-      font-size: 26px; font-weight: 600; border-radius: 12px;
-      border: none; cursor: pointer; flex-shrink: 0;
-    }
+    .btn-add { width: 52px; background: var(--red); color: #fff; font-size: 26px; font-weight: 600; border-radius: 12px; border: none; cursor: pointer; flex-shrink: 0; }
     .flash { font-size: 13px; color: var(--gold); padding: 8px 4px 0; letter-spacing: .3px; min-height: 28px; }
 
-    /* review cta */
-    .btn-review {
-      width: 100%; background: var(--red); color: #fff;
-      font-family: 'Oswald', sans-serif; font-weight: 600;
-      font-size: 19px; letter-spacing: 2px; padding: 16px;
-      border-radius: 12px; border: none; cursor: pointer; margin-top: 16px;
-    }
+    .btn-review { width: 100%; background: var(--red); color: #fff; font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 19px; letter-spacing: 2px; padding: 16px; border-radius: 12px; border: none; cursor: pointer; margin-top: 16px; }
     .btn-review:disabled { opacity: .35; cursor: default; }
 
-    /* word list */
     .list { margin-top: 22px; display: flex; flex-direction: column; gap: 9px; }
     .empty { color: var(--muted); font-size: 15px; line-height: 1.6; padding: 30px 6px; text-align: center; }
-    .card {
-      display: flex; align-items: center; gap: 10px;
-      background: var(--surface); border-radius: 12px;
-      padding: 13px 14px; border-left: 3px solid var(--red);
-      animation: vcIn .35s cubic-bezier(.2,.7,.3,1) both;
-    }
+    .card { display: flex; align-items: flex-start; gap: 10px; background: var(--surface); border-radius: 12px; padding: 13px 14px; border-left: 3px solid var(--red); animation: vcIn .35s cubic-bezier(.2,.7,.3,1) both; }
     .card-main { flex: 1; min-width: 0; }
     .card-word { font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 19px; letter-spacing: .4px; }
     .card-tr { font-size: 14.5px; color: var(--muted); margin-top: 2px; }
     .card-tr.err { color: var(--red); }
+    .card-example { font-size: 13px; color: #6b6258; margin-top: 5px; line-height: 1.4; font-style: italic; }
     .ipa { color: #6b6258; font-size: 13px; }
-    .shimmer {
-      height: 14px; width: 55%; border-radius: 4px; margin-top: 6px;
-      background: linear-gradient(90deg,#2a2522 25%,#3a342f 50%,#2a2522 75%);
-      background-size: 400px 100%; animation: shimmer 1.1s infinite linear;
-    }
-    .btn-mini {
-      background: var(--surface2); color: var(--gold);
-      width: 34px; height: 34px; border-radius: 9px;
-      font-size: 17px; border: none; cursor: pointer; flex-shrink: 0;
-    }
-    .btn-ghost {
-      background: transparent; color: #5a5249;
-      width: 34px; height: 34px; border-radius: 9px;
-      font-size: 20px; border: none; cursor: pointer; flex-shrink: 0;
-    }
-    .card-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .shimmer { height: 14px; width: 55%; border-radius: 4px; margin-top: 6px; background: linear-gradient(90deg,#2a2522 25%,#3a342f 50%,#2a2522 75%); background-size: 400px 100%; animation: shimmer 1.1s infinite linear; }
+    .btn-mini { background: var(--surface2); color: var(--gold); width: 34px; height: 34px; border-radius: 9px; font-size: 17px; border: none; cursor: pointer; flex-shrink: 0; }
+    .btn-ghost { background: transparent; color: #5a5249; width: 34px; height: 34px; border-radius: 9px; font-size: 20px; border: none; cursor: pointer; flex-shrink: 0; }
+    .card-actions { display: flex; gap: 6px; flex-shrink: 0; padding-top: 2px; }
 
-    /* review screen */
     .review-root { padding-top: 6px; }
     .progress-bar { height: 3px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--red); transition: width .3s ease; }
@@ -119,7 +73,12 @@
     .review-card { background: var(--surface); border-radius: 16px; padding: 30px 20px 24px; margin-top: 16px; min-height: 240px; }
     .review-hero { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 38px; line-height: 1.05; letter-spacing: .5px; text-align: center; text-transform: uppercase; }
     .review-prompt { text-align: center; color: var(--muted); font-size: 14px; margin: 10px 0 22px; letter-spacing: .3px; }
-    .verdict { text-align: center; font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 18px; letter-spacing: 1px; margin: 16px 0 14px; }
+    .review-actions { display: flex; gap: 8px; }
+    .review-actions .btn-add { flex: 1; border-radius: 12px; font-size: 22px; }
+    .btn-skip { width: 52px; background: var(--surface2); color: var(--muted); font-size: 20px; border-radius: 12px; border: none; cursor: pointer; flex-shrink: 0; }
+    .verdict { text-align: center; font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 18px; letter-spacing: 1px; margin: 16px 0 8px; }
+    .your-answer { text-align: center; font-size: 14px; color: var(--muted); margin-bottom: 10px; }
+    .your-answer span { color: var(--red); text-decoration: line-through; }
     .answer-tr { text-align: center; font-size: 22px; font-weight: 500; }
     .ipa-big { text-align: center; color: var(--muted); font-size: 15px; margin-top: 4px; }
     .example-box { background: var(--surface2); border-radius: 10px; padding: 12px 14px; margin-top: 16px; border-left: 2px solid var(--gold); }
@@ -128,7 +87,6 @@
     .btn-text { width: 100%; background: transparent; color: var(--muted); font-size: 14px; padding: 14px; border: none; cursor: pointer; letter-spacing: .3px; font-family: 'Golos Text', sans-serif; }
     .btn-override { background: transparent; border: none; color: var(--muted); font-size: 13px; cursor: pointer; padding: 10px 0; text-decoration: underline; font-family: 'Golos Text', sans-serif; display: block; margin: 0 auto; }
 
-    /* done */
     .done-title { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 3px; text-align: center; margin-top: 30px; }
     .done-stats { background: var(--surface); border-radius: 14px; padding: 18px 20px; margin-top: 22px; }
     .done-row { display: flex; justify-content: space-between; font-size: 16px; padding: 8px 0; color: var(--muted); }
@@ -144,7 +102,6 @@
 </head>
 <body>
 <div id="app"></div>
-
 <script>
 const STORAGE_KEY = 'vocab_words_v2';
 const ONBOARDING_KEY = 'vocab_onboarding_done';
@@ -158,24 +115,48 @@ const save = w => localStorage.setItem(STORAGE_KEY, JSON.stringify(w));
 
 function applySrs(card, grade) {
   let ease = card.ease??2.5, interval = card.interval??1, streak = card.success_streak??0;
-  if (grade==='forgot') { ease=Math.max(1.3,ease-.2); interval=1; streak=0; }
-  else if (grade==='hard') { interval=Math.max(1,Math.round(interval*1.25)); streak+=1; }
-  else { interval=Math.max(1,Math.round(interval*ease)); ease=Math.min(3,ease+.05); streak+=1; }
-  return {...card, ease, interval, success_streak:streak, last_reviewed_at:todayStr(), next_review_date:addDaysStr(interval)};
+  if (grade==='forgot') {
+    ease = Math.max(1.3, ease-.2);
+    interval = 1;
+    streak = 0;
+  } else if (grade==='hard') {
+    interval = Math.max(1, Math.round(interval*1.25));
+    streak += 1;
+  } else {
+    interval = Math.max(1, Math.round(interval*ease));
+    ease = Math.min(3, ease+.05);
+    streak += 1;
+  }
+  // забытые слова возвращаются сегодня же
+  const nextDate = grade==='forgot' ? todayStr() : addDaysStr(interval);
+  return {...card, ease, interval, success_streak:streak, last_reviewed_at:todayStr(), next_review_date:nextDate};
+}
+
+// нечёткое сравнение — расстояние Левенштейна
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  const dp = Array.from({length:m+1}, (_,i) => Array.from({length:n+1}, (_,j) => i===0?j:j===0?i:0));
+  for (let i=1;i<=m;i++) for (let j=1;j<=n;j++)
+    dp[i][j] = a[i-1]===b[j-1] ? dp[i-1][j-1] : 1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  return dp[m][n];
 }
 
 const norm = s => (s||'').toLowerCase().replace(/ё/g,'е').replace(/[.,;!?"'`]/g,'').trim();
 function isMatch(ans, tr) {
-  if (!norm(ans)) return false;
-  return norm(tr).split(/[,/]| или /).map(s=>s.trim()).filter(Boolean).some(m=>m&&(m.includes(norm(ans))||norm(ans).includes(m)));
+  const a = norm(ans);
+  if (!a) return false;
+  const meanings = norm(tr).split(/[,/]| или /).map(s=>s.trim()).filter(Boolean);
+  return meanings.some(m => {
+    if (!m) return false;
+    if (m.includes(a) || a.includes(m)) return true;
+    // допускаем 1-2 опечатки в зависимости от длины
+    const maxDist = a.length <= 4 ? 1 : 2;
+    return levenshtein(a, m) <= maxDist;
+  });
 }
 
 async function translate(word) {
-  const res = await fetch('/api/translate', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({word})
-  });
+  const res = await fetch('/api/translate', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({word}) });
   if (!res.ok) throw new Error('api error');
   return res.json();
 }
@@ -183,51 +164,25 @@ async function translate(word) {
 let words = load();
 let screen = localStorage.getItem(ONBOARDING_KEY) ? 'input' : 'onboarding';
 let session = null;
-
 const app = document.getElementById('app');
 
 function render() {
   const dueCount = words.filter(w=>!w.loading&&(w.next_review_date||'9999')<=todayStr()).length;
   app.innerHTML = '';
-
   if (screen==='onboarding') { renderOnboarding(); return; }
-
   const header = el('header','header');
-  header.innerHTML = `
-    <div class="diag"></div>
-    <div class="header-top">
-      <div>
-        <div class="wordmark">СЛОВА<span>.</span></div>
-        <div class="stats">${words.length} в словаре${dueCount>0?` · <b>${dueCount} на повтор</b>`:''}</div>
-      </div>
-    </div>`;
+  header.innerHTML = `<div class="diag"></div><div class="header-top"><div><div class="wordmark">СЛОВА<span>.</span></div><div class="stats">${words.length} в словаре${dueCount>0?` · <b>${dueCount} на повтор</b>`:''}</div></div></div>`;
   app.appendChild(header);
-
   if (screen==='input') renderInput(dueCount);
   else if (screen==='review') renderReview();
 }
 
 function renderOnboarding() {
   const root = el('div','onboarding');
-  root.innerHTML = `
-    <div class="onb-diag"></div>
-    <div class="onb-wordmark">СЛОВА<span>.</span></div>
-    <div class="onb-sub">Приложение для слов из сериалов и фильмов</div>
-    <div class="onb-steps">
-      <div class="onb-step"><div class="onb-arrow">→</div><div class="onb-text">Встретил незнакомое слово — введи сюда</div></div>
-      <div class="onb-step"><div class="onb-arrow">→</div><div class="onb-text">Получи перевод моментально</div></div>
-      <div class="onb-step"><div class="onb-arrow">→</div><div class="onb-text">Открывай когда хочешь и повторяй — без уведомлений и чувства вины</div></div>
-    </div>`;
-  const btn = el('button','btn-review');
-  btn.textContent = 'НАЧАТЬ →';
-  btn.style.marginTop = '0';
-  btn.onclick = () => {
-    localStorage.setItem(ONBOARDING_KEY, '1');
-    screen = 'input';
-    render();
-  };
-  root.appendChild(btn);
-  app.appendChild(root);
+  root.innerHTML = `<div class="onb-diag"></div><div class="onb-wordmark">СЛОВА<span>.</span></div><div class="onb-sub">Приложение для слов из сериалов и фильмов</div><div class="onb-steps"><div class="onb-step"><div class="onb-arrow">→</div><div class="onb-text">Встретил незнакомое слово — введи сюда</div></div><div class="onb-step"><div class="onb-arrow">→</div><div class="onb-text">Получи перевод моментально</div></div><div class="onb-step"><div class="onb-arrow">→</div><div class="onb-text">Открывай когда хочешь и повторяй — без уведомлений и чувства вины</div></div></div>`;
+  const btn = el('button','btn-review'); btn.textContent='НАЧАТЬ →'; btn.style.marginTop='0';
+  btn.onclick = () => { localStorage.setItem(ONBOARDING_KEY,'1'); screen='input'; render(); };
+  root.appendChild(btn); app.appendChild(root);
 }
 
 function renderInput(dueCount) {
@@ -237,165 +192,126 @@ function renderInput(dueCount) {
   inp.setAttribute('autocapitalize','none'); inp.setAttribute('autocorrect','off'); inp.setAttribute('spellcheck','false');
   inp.addEventListener('keydown', e=>{ if(e.key==='Enter') addWord(); });
   const btn = el('button','btn-add'); btn.textContent='+'; btn.onclick=addWord;
-  wrap.appendChild(inp); wrap.appendChild(btn);
-  app.appendChild(wrap);
+  wrap.appendChild(inp); wrap.appendChild(btn); app.appendChild(wrap);
 
-  const flash = el('div','flash'); flash.id='flash';
-  app.appendChild(flash);
+  const flash = el('div','flash'); flash.id='flash'; app.appendChild(flash);
 
   const rb = el('button','btn-review');
   rb.textContent = dueCount>0 ? `ПОВТОРИТЬ · ${dueCount}` : 'НЕТ СЛОВ НА ПОВТОР';
-  rb.disabled = dueCount===0;
-  rb.onclick = startReview;
-  app.appendChild(rb);
+  rb.disabled = dueCount===0; rb.onclick = startReview; app.appendChild(rb);
 
   const list = el('div','list');
   if (words.length===0) {
-    const empty = el('div','empty');
-    empty.textContent='введи слово из сериала — перевод подтянется сам, вечером жми повторить.';
-    list.appendChild(empty);
+    const empty = el('div','empty'); empty.textContent='введи слово из сериала — перевод подтянется сам, вечером жми повторить.'; list.appendChild(empty);
   } else {
     words.forEach((w,i) => {
-      const card = el('div','card');
-      card.style.animationDelay = Math.min(i,8)*0.03+'s';
+      const card = el('div','card'); card.style.animationDelay=Math.min(i,8)*0.03+'s';
       const main = el('div','card-main');
-      const word = el('div','card-word'); word.textContent=w.word_en;
-      main.appendChild(word);
+      const word = el('div','card-word'); word.textContent=w.word_en; main.appendChild(word);
       if (w.loading) {
         const sh = el('div','shimmer'); main.appendChild(sh);
       } else {
         const tr = el('div','card-tr'+(w.error?' err':''));
         tr.innerHTML = w.translation_ru + (w.transcription?` <span class="ipa">${w.transcription}</span>`:'');
         main.appendChild(tr);
+        // пример прямо в карточке
+        if (w.example_en && !w.error) {
+          const ex = el('div','card-example'); ex.textContent=w.example_en; main.appendChild(ex);
+        }
       }
       card.appendChild(main);
-
-      // actions: retry if error, always show delete
       const actions = el('div','card-actions');
-      if (w.error) {
-        const retryBtn = el('button','btn-mini');
-        retryBtn.textContent='↻';
-        retryBtn.onclick=()=>retryWord(w.id);
-        actions.appendChild(retryBtn);
-      }
-      if (!w.loading) {
-        const delBtn = el('button','btn-ghost');
-        delBtn.textContent='×';
-        delBtn.onclick=()=>removeWord(w.id);
-        actions.appendChild(delBtn);
-      }
-      card.appendChild(actions);
-      list.appendChild(card);
+      if (w.error) { const r=el('button','btn-mini'); r.textContent='↻'; r.onclick=()=>retryWord(w.id); actions.appendChild(r); }
+      if (!w.loading) { const d=el('button','btn-ghost'); d.textContent='×'; d.onclick=()=>removeWord(w.id); actions.appendChild(d); }
+      card.appendChild(actions); list.appendChild(card);
     });
   }
   app.appendChild(list);
-  const inp2 = document.getElementById('word-input');
-  if (inp2) inp2.focus();
+  const inp2 = document.getElementById('word-input'); if (inp2) inp2.focus();
 }
 
 function renderReview() {
   const root = el('div','review-root');
 
   if (session.done) {
-    const {reviewed,hard,forgot} = session.stats;
-    root.innerHTML = `
-      <div class="done-title">ГОТОВО</div>
-      <div class="done-stats">
-        <div class="done-row"><span>повторено</span><b>${reviewed}</b></div>
-        <div class="done-row"><span>сложно</span><b>${hard}</b></div>
-        <div class="done-row"><span>забыто</span><b class="${forgot>0?'bad':''}">${forgot}</b></div>
-      </div>`;
+    const {reviewed,hard,forgot,skipped} = session.stats;
+    root.innerHTML = `<div class="done-title">ГОТОВО</div><div class="done-stats"><div class="done-row"><span>повторено</span><b>${reviewed}</b></div><div class="done-row"><span>сложно</span><b>${hard}</b></div><div class="done-row"><span>забыто</span><b class="${forgot>0?'bad':''}">${forgot}</b></div>${skipped>0?`<div class="done-row"><span>пропущено</span><b>${skipped}</b></div>`:''}</div>`;
     const again = el('button','btn-review'); again.textContent='ЕЩЁ РАЗ'; again.onclick=startReview;
     const back = el('button','btn-text'); back.textContent='← к словам'; back.onclick=()=>{screen='input';render();};
-    root.appendChild(again); root.appendChild(back);
-    app.appendChild(root); return;
+    root.appendChild(again); root.appendChild(back); app.appendChild(root); return;
   }
 
   const card = session.cards[session.idx];
   const total = session.cards.length;
   const pct = (session.idx/total)*100;
 
-  root.innerHTML = `
-    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-    <div class="progress-text">${session.idx+1} / ${total}</div>`;
+  root.innerHTML = `<div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div><div class="progress-text">${session.idx+1} / ${total}</div>`;
 
   const rc = el('div','review-card');
   rc.innerHTML = `<div class="review-hero">${card.word_en}</div>`;
 
   if (!session.revealed) {
     rc.innerHTML += `<div class="review-prompt">как по-русски?</div>`;
-    const iw = el('div','input-wrap');
+    const iw = el('div','review-actions');
     const ai = document.createElement('input');
     ai.type='text'; ai.id='review-input'; ai.placeholder='перевод…';
     ai.setAttribute('autocapitalize','none'); ai.setAttribute('autocorrect','off'); ai.setAttribute('spellcheck','false');
     ai.addEventListener('keydown', e=>{ if(e.key==='Enter') checkAnswer(); });
     const cb = el('button','btn-add'); cb.textContent='→'; cb.onclick=checkAnswer;
-    iw.appendChild(ai); iw.appendChild(cb);
+    // кнопка «не знаю»
+    const sk = el('button','btn-skip'); sk.textContent='?'; sk.title='не знаю'; sk.onclick=skipCard;
+    iw.appendChild(ai); iw.appendChild(cb); iw.appendChild(sk);
     rc.appendChild(iw);
   } else {
-    const {correct} = session.result;
+    const {correct, skipped} = session.result;
     const rev = el('div','reveal');
-    rev.innerHTML = `
-      <div class="verdict">${correct?'<span style="color:var(--gold)">✓ верно</span>':'<span style="color:var(--red)">✗ не угадано</span>'}</div>
-      <div class="answer-tr">${card.translation_ru}</div>
-      ${card.transcription?`<div class="ipa-big">${card.transcription}</div>`:''}
-      ${card.example_en?`<div class="example-box"><div class="ex-en">${card.example_en}</div><div class="ex-ru">${card.example_ru}</div></div>`:''}`;
-    if (!correct && !session.result.overridden) {
-      const ov = el('button','btn-override'); ov.textContent='я знал это слово →'; ov.onclick=overrideGrade;
-      rev.appendChild(ov);
+    // показываем что было введено при неверном ответе
+    let verdictHtml = '';
+    if (skipped) {
+      verdictHtml = `<div class="verdict"><span style="color:var(--muted)">— пропущено</span></div>`;
+    } else if (correct) {
+      verdictHtml = `<div class="verdict"><span style="color:var(--gold)">✓ верно</span></div>`;
+    } else {
+      verdictHtml = `<div class="verdict"><span style="color:var(--red)">✗ не угадано</span></div><div class="your-answer">ты написала: <span>${session.answer||'—'}</span></div>`;
     }
-    const nb = el('button','btn-review'); nb.textContent='ДАЛЬШЕ'; nb.onclick=nextCard;
-    rev.appendChild(nb);
+    rev.innerHTML = `${verdictHtml}<div class="answer-tr">${card.translation_ru}</div>${card.transcription?`<div class="ipa-big">${card.transcription}</div>`:''}${card.example_en?`<div class="example-box"><div class="ex-en">${card.example_en}</div><div class="ex-ru">${card.example_ru}</div></div>`:''}`;
+    if (!correct && !skipped && !session.result.overridden) {
+      const ov = el('button','btn-override'); ov.textContent='я знала это слово →'; ov.onclick=overrideGrade; rev.appendChild(ov);
+    }
+    const nb = el('button','btn-review'); nb.textContent='ДАЛЬШЕ'; nb.onclick=nextCard; rev.appendChild(nb);
     rc.appendChild(rev);
   }
 
   root.appendChild(rc);
-  const exitBtn = el('button','btn-text'); exitBtn.textContent='выйти'; exitBtn.onclick=()=>{screen='input';render();};
-  root.appendChild(exitBtn);
+  const exitBtn = el('button','btn-text'); exitBtn.textContent='выйти'; exitBtn.onclick=()=>{screen='input';render();}; root.appendChild(exitBtn);
   app.appendChild(root);
-
-  const ri = document.getElementById('review-input');
-  if (ri) setTimeout(()=>ri.focus(),50);
+  const ri = document.getElementById('review-input'); if (ri) setTimeout(()=>ri.focus(),50);
 }
 
 async function addWord() {
-  const inp = document.getElementById('word-input');
-  if (!inp) return;
-  const raw = inp.value.trim();
-  if (!raw) return;
+  const inp = document.getElementById('word-input'); if (!inp) return;
+  const raw = inp.value.trim(); if (!raw) return;
   inp.value='';
-
   if (words.find(w=>w.word_en.toLowerCase()===raw.toLowerCase())) {
-    showFlash('уже есть · '+words.find(w=>w.word_en.toLowerCase()===raw.toLowerCase()).translation_ru);
-    return;
+    showFlash('уже есть · '+words.find(w=>w.word_en.toLowerCase()===raw.toLowerCase()).translation_ru); return;
   }
-
   const id = Date.now().toString();
-  const card = { id, word_en:raw, translation_ru:'…', transcription:'', example_en:'', example_ru:'', loading:true, created_at:todayStr(), next_review_date:addDaysStr(1), last_reviewed_at:null, ease:2.5, interval:1, success_streak:0 };
-  words = [card, ...words];
-  save(words); render();
-
+  const card = {id, word_en:raw, translation_ru:'…', transcription:'', example_en:'', example_ru:'', loading:true, created_at:todayStr(), next_review_date:addDaysStr(1), last_reviewed_at:null, ease:2.5, interval:1, success_streak:0};
+  words = [card,...words]; save(words); render();
   try {
     const t = await translate(raw);
     words = words.map(w=>w.id===id?{...w,...t,word_en:t.word_en||w.word_en,loading:false}:w);
-    save(words); render();
   } catch(e) {
     words = words.map(w=>w.id===id?{...w,translation_ru:'ошибка перевода',loading:false,error:true}:w);
-    save(words); render();
   }
+  save(words); render();
 }
 
 async function retryWord(id) {
-  const card = words.find(w=>w.id===id);
-  if (!card) return;
-  words = words.map(w=>w.id===id?{...w,loading:true,error:false}:w);
-  save(words); render();
-  try {
-    const t = await translate(card.word_en);
-    words = words.map(w=>w.id===id?{...w,...t,loading:false,error:false}:w);
-  } catch(e) {
-    words = words.map(w=>w.id===id?{...w,loading:false,error:true}:w);
-  }
+  const card = words.find(w=>w.id===id); if (!card) return;
+  words = words.map(w=>w.id===id?{...w,loading:true,error:false}:w); save(words); render();
+  try { const t=await translate(card.word_en); words=words.map(w=>w.id===id?{...w,...t,loading:false,error:false}:w); }
+  catch(e) { words=words.map(w=>w.id===id?{...w,loading:false,error:true}:w); }
   save(words); render();
 }
 
@@ -404,7 +320,7 @@ function removeWord(id) { words=words.filter(w=>w.id!==id); save(words); render(
 function startReview() {
   const due = words.filter(w=>!w.loading&&(w.next_review_date||'9999')<=todayStr()).sort(()=>Math.random()-.5).slice(0,20);
   if (!due.length) return;
-  session = { cards:due, idx:0, shownAt:Date.now(), revealed:false, answer:'', result:null, stats:{reviewed:0,hard:0,forgot:0}, done:false };
+  session = {cards:due, idx:0, shownAt:Date.now(), revealed:false, answer:'', result:null, stats:{reviewed:0,hard:0,forgot:0,skipped:0}, done:false};
   screen='review'; render();
 }
 
@@ -415,7 +331,12 @@ function checkAnswer() {
   const elapsed = Date.now()-session.shownAt;
   const correct = isMatch(answer, card.translation_ru);
   const grade = !correct?'forgot': elapsed<=15000?'easy':'hard';
-  session = {...session, revealed:true, answer, result:{correct,grade,elapsed,overridden:false}};
+  session = {...session, revealed:true, answer, result:{correct, grade, elapsed, skipped:false, overridden:false}};
+  render();
+}
+
+function skipCard() {
+  session = {...session, revealed:true, answer:'', result:{correct:false, grade:'forgot', elapsed:0, skipped:true, overridden:false}};
   render();
 }
 
@@ -427,12 +348,12 @@ function overrideGrade() {
 function nextCard() {
   const card = session.cards[session.idx];
   const updated = applySrs(card, session.result.grade);
-  words = words.map(w=>w.id===card.id?updated:w);
-  save(words);
+  words = words.map(w=>w.id===card.id?updated:w); save(words);
   const stats = {...session.stats};
   stats.reviewed+=1;
-  if (session.result.grade==='hard') stats.hard+=1;
-  if (session.result.grade==='forgot') stats.forgot+=1;
+  if (session.result.skipped) stats.skipped+=1;
+  else if (session.result.grade==='hard') stats.hard+=1;
+  else if (session.result.grade==='forgot') stats.forgot+=1;
   const nextIdx = session.idx+1;
   if (nextIdx>=session.cards.length) {
     session = {...session, idx:nextIdx, stats, done:true};

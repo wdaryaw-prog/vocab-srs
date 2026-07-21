@@ -141,7 +141,7 @@ function levenshtein(a, b) {
   return dp[m][n];
 }
 
-const norm = s => (s||'').toLowerCase().replace(/ё/g,'е').replace(/[.,;!?"'`]/g,'').trim();
+const norm = s => (s||'').toLowerCase().replace(/\(.*?\)/g,'').replace(/ё/g,'е').replace(/[.,;!?"'`]/g,'').trim();
 function isMatch(ans, tr) {
   const a = norm(ans);
   if (!a) return false;

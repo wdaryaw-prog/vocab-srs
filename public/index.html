@@ -145,11 +145,12 @@ const norm = s => (s||'').toLowerCase().replace(/\(.*?\)/g,'').replace(/ё/g,'е
 function isMatch(ans, tr) {
   const a = norm(ans);
   if (!a) return false;
-  const meanings = norm(tr).split(/[,/]| или /).map(s=>s.trim()).filter(Boolean);
+  // сначала убираем скобки, потом сплитим — иначе запятые внутри скобок ломают разбивку
+  const cleaned = (tr||'').replace(/\(.*?\)/g,'');
+  const meanings = cleaned.split(/[,/]| или /).map(s=>norm(s)).filter(Boolean);
   return meanings.some(m => {
     if (!m) return false;
     if (m.includes(a) || a.includes(m)) return true;
-    // допускаем 1-2 опечатки в зависимости от длины
     const maxDist = a.length <= 4 ? 1 : a.length <= 8 ? 2 : 3;
     return levenshtein(a, m) <= maxDist;
   });

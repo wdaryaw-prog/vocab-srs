@@ -150,7 +150,7 @@ function isMatch(ans, tr) {
     if (!m) return false;
     if (m.includes(a) || a.includes(m)) return true;
     // допускаем 1-2 опечатки в зависимости от длины
-    const maxDist = a.length <= 4 ? 1 : 2;
+    const maxDist = a.length <= 4 ? 1 : a.length <= 8 ? 2 : 3;
     return levenshtein(a, m) <= maxDist;
   });
 }
@@ -255,7 +255,7 @@ function renderReview() {
     const iw = el('div','review-actions');
     const ai = document.createElement('input');
     ai.type='text'; ai.id='review-input'; ai.placeholder='перевод…';
-    ai.setAttribute('autocapitalize','none'); ai.setAttribute('autocorrect','off'); ai.setAttribute('spellcheck','false');
+    ai.setAttribute("autocapitalize","none"); ai.setAttribute("autocorrect","off"); ai.setAttribute("spellcheck","false"); ai.setAttribute("data-gramm","false"); ai.setAttribute("inputmode","text");
     ai.addEventListener('keydown', e=>{ if(e.key==='Enter') checkAnswer(); });
     const cb = el('button','btn-add'); cb.textContent='→'; cb.onclick=checkAnswer;
     // кнопка «не знаю»

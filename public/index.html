@@ -272,7 +272,7 @@ function renderReview() {
     } else if (correct) {
       verdictHtml = `<div class="verdict"><span style="color:var(--gold)">✓ верно</span></div>`;
     } else {
-      verdictHtml = `<div class="verdict"><span style="color:var(--red)">✗ не угадано</span></div><div class="your-answer">ты написала: <span>${session.answer||'—'}</span></div>`;
+      verdictHtml = `<div class="verdict"><span style="color:var(--red)">✗ не угадано</span></div><div class="your-answer">твой вариант: <span>${session.answer||'—'}</span></div>`;
     }
     rev.innerHTML = `${verdictHtml}<div class="answer-tr">${card.translation_ru}</div>${card.transcription?`<div class="ipa-big">${card.transcription}</div>`:''}${card.example_en?`<div class="example-box"><div class="ex-en">${card.example_en}</div><div class="ex-ru">${card.example_ru}</div></div>`:''}`;
     if (!correct && !skipped && !session.result.overridden) {
@@ -298,16 +298,17 @@ async function addWord() {
   const id = Date.now().toString();
   const card = {id, word_en:raw, translation_ru:'…', transcription:'', example_en:'', example_ru:'', loading:true, created_at:todayStr(), next_review_date:todayStr(), last_reviewed_at:null, ease:2.5, interval:1, success_streak:0};
   words = [card,...words]; save(words); render();
+  let corrected = false, correctedTo = null;
   try {
     const t = await translate(raw);
-    const corrected = t.word_en && t.word_en.toLowerCase() !== raw.toLowerCase();
-    words = words.map(w=>w.id===id?{...w,...t,word_en:t.word_en||w.word_en,loading:false}:w);
-    if (corrected) showCorrectionPrompt(id, raw, t.word_en);
+    corrected = t.word_en && t.word_en.toLowerCase() !== raw.toLowerCase();
+    correctedTo = t.word_en;
     words = words.map(w=>w.id===id?{...w,...t,word_en:t.word_en||w.word_en,loading:false}:w);
   } catch(e) {
     words = words.map(w=>w.id===id?{...w,translation_ru:'ошибка перевода',loading:false,error:true}:w);
   }
   save(words); render();
+  if (corrected) showCorrectionPrompt(id, raw, correctedTo);
 }
 
 async function retryWord(id) {

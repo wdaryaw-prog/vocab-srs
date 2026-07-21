@@ -376,18 +376,48 @@ function showCorrectionPrompt(id, original, corrected) {
   const f = document.getElementById("flash");
   if (!f) return;
   f.innerHTML = "";
-  const msg = document.createElement("span");
-  msg.textContent = `исправлено: ${original} → ${corrected}  `;
-  const keepBtn = document.createElement("button");
-  keepBtn.textContent = "оставить " + original;
-  keepBtn.style.cssText = "background:var(--surface2);color:var(--muted);border:none;border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;font-family:inherit;";
-  keepBtn.onclick = () => {
-    words = words.map(w => w.id===id ? {...w, word_en:original} : w);
-    save(words); f.innerHTML = ""; render();
+  f.style.cssText = "display:flex;flex-direction:column;gap:8px;padding:10px 0;";
+
+  // строка 1: что было исправлено
+  const row1 = document.createElement("div");
+  row1.style.cssText = "font-size:13px;color:var(--gold);";
+  row1.textContent = `исправлено: ${original} → ${corrected}`;
+  f.appendChild(row1);
+
+  // строка 2: поле «что имела в виду» + кнопка сохранить
+  const row2 = document.createElement("div");
+  row2.style.cssText = "display:flex;gap:6px;align-items:center;";
+  const inp = document.createElement("input");
+  inp.type = "text";
+  inp.placeholder = "что имела в виду?";
+  inp.value = original;
+  inp.style.cssText = "flex:1;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px;color:var(--text);font-family:inherit;outline:none;";
+  const saveBtn = document.createElement("button");
+  saveBtn.textContent = "сохранить";
+  saveBtn.style.cssText = "background:var(--red);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;";
+  const dismiss = () => { f.innerHTML = ""; f.style.cssText = ""; };
+  saveBtn.onclick = () => {
+    const val = inp.value.trim();
+    if (val) {
+      words = words.map(w => w.id===id ? {...w, word_en:val} : w);
+      save(words); render();
+    }
+    dismiss();
   };
-  f.appendChild(msg);
-  f.appendChild(keepBtn);
-  setTimeout(() => { if(f) f.innerHTML = ""; }, 6000);
+  inp.addEventListener("keydown", e => { if (e.key==="Enter") saveBtn.click(); if (e.key==="Escape") dismiss(); });
+  row2.appendChild(inp); row2.appendChild(saveBtn);
+  f.appendChild(row2);
+
+  // строка 3: оставить исправленный вариант
+  const row3 = document.createElement("div");
+  const keepBtn = document.createElement("button");
+  keepBtn.textContent = `оставить ${corrected}`;
+  keepBtn.style.cssText = "background:transparent;color:var(--muted);border:none;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;padding:0;";
+  keepBtn.onclick = dismiss;
+  row3.appendChild(keepBtn);
+  f.appendChild(row3);
+
+  setTimeout(dismiss, 12000);
 }
 
 function el(tag, cls) { const e=document.createElement(tag); if(cls) e.className=cls; return e; }

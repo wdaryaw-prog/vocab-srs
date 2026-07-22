@@ -73,9 +73,10 @@
     .review-card { background: var(--surface); border-radius: 16px; padding: 30px 20px 24px; margin-top: 16px; min-height: 240px; }
     .review-hero { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 38px; line-height: 1.05; letter-spacing: .5px; text-align: center; text-transform: uppercase; }
     .review-prompt { text-align: center; color: var(--muted); font-size: 14px; margin: 10px 0 22px; letter-spacing: .3px; }
-    .review-actions { display: flex; gap: 8px; }
-    .review-actions .btn-add { flex: 1; border-radius: 12px; font-size: 22px; }
-    .btn-skip { width: 52px; background: var(--surface2); color: var(--muted); font-size: 20px; border-radius: 12px; border: none; cursor: pointer; flex-shrink: 0; }
+    .review-actions { display: flex; gap: 8px; align-items: stretch; }
+    .review-actions input { flex: 1; min-width: 0; }
+    .review-actions .btn-add { flex: 0 0 52px; width: 52px; height: 52px; border-radius: 12px; font-size: 22px; }
+    .btn-skip { width: 52px; height: 52px; background: var(--surface2); color: var(--muted); font-size: 24px; border-radius: 12px; border: none; cursor: pointer; flex-shrink: 0; }
     .verdict { text-align: center; font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 18px; letter-spacing: 1px; margin: 16px 0 8px; }
     .your-answer { text-align: center; font-size: 14px; color: var(--muted); margin-bottom: 10px; }
     .your-answer span { color: var(--red); text-decoration: line-through; }

@@ -75,6 +75,8 @@
     .review-prompt { text-align: center; color: var(--muted); font-size: 14px; margin: 10px 0 22px; letter-spacing: .3px; }
     .review-actions { display: flex; gap: 8px; align-items: stretch; }
     .review-actions input { flex: 1; min-width: 0; }
+    .review-actions input[type="search"]::-webkit-search-cancel-button,
+    .review-actions input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; display: none; }
     .review-actions .btn-add { flex: 0 0 52px; width: 52px; height: 52px; border-radius: 12px; font-size: 22px; }
     .btn-skip { width: 52px; height: 52px; background: var(--surface2); color: var(--muted); font-size: 24px; border-radius: 12px; border: none; cursor: pointer; flex-shrink: 0; }
     .verdict { text-align: center; font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 18px; letter-spacing: 1px; margin: 16px 0 8px; }
@@ -256,9 +258,18 @@ function renderReview() {
     rc.innerHTML += `<div class="review-prompt">как по-русски?</div>`;
     const iw = el('div','review-actions');
     const ai = document.createElement('input');
-    ai.type='text'; ai.id='review-input'; ai.placeholder='перевод…';
-    ai.setAttribute("autocapitalize","none"); ai.setAttribute("autocorrect","off"); ai.setAttribute("spellcheck","false"); ai.setAttribute("data-gramm","false"); ai.setAttribute("inputmode","text");
-    ai.addEventListener('keydown', e=>{ if(e.key==='Enter') checkAnswer(); });
+    ai.type='search'; ai.id='review-input'; ai.placeholder='перевод…';
+    ai.setAttribute("autocapitalize","none"); ai.setAttribute("autocorrect","off");
+    ai.setAttribute("autocomplete","off"); ai.setAttribute("spellcheck","false");
+    ai.setAttribute("data-gramm","false"); ai.setAttribute("data-gramm_editor","false");
+    ai.setAttribute("data-enable-grammarly","false"); ai.setAttribute("inputmode","text");
+    // iOS: track actual typed value before autocorrect substitution
+    let _typedVal = '';
+    ai.addEventListener('compositionstart', ()=>{ _typedVal = ai.value; });
+    ai.addEventListener('compositionend', ()=>{ _typedVal = ai.value; });
+    ai.addEventListener('input', ()=>{ _typedVal = ai.value; });
+    ai._getTyped = ()=> _typedVal || ai.value;
+    ai.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); checkAnswer(); } });
     const cb = el('button','btn-add'); cb.textContent='→'; cb.onclick=checkAnswer;
     // кнопка «не знаю»
     const sk = el('button','btn-skip'); sk.textContent='🤷'; sk.title='не знаю'; sk.onclick=skipCard;
@@ -332,7 +343,7 @@ function startReview() {
 
 function checkAnswer() {
   const inp = document.getElementById('review-input');
-  const answer = inp ? inp.value : '';
+  const answer = inp ? (inp._getTyped ? inp._getTyped() : inp.value) : '';
   const card = session.cards[session.idx];
   const elapsed = Date.now()-session.shownAt;
   const correct = isMatch(answer, card.translation_ru);

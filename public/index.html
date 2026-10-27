@@ -258,11 +258,9 @@ function renderReview() {
     rc.innerHTML += `<div class="review-prompt">как по-русски?</div>`;
     const iw = el('div','review-actions');
     const ai = document.createElement('input');
-    ai.type='search'; ai.id='review-input'; ai.placeholder='перевод…';
-    ai.setAttribute("autocapitalize","none"); ai.setAttribute("autocorrect","off");
-    ai.setAttribute("autocomplete","off"); ai.setAttribute("spellcheck","false");
-    ai.setAttribute("data-gramm","false"); ai.setAttribute("data-gramm_editor","false");
-    ai.setAttribute("data-enable-grammarly","false"); ai.setAttribute("inputmode","text");
+    ai.type='text'; ai.id='review-input'; ai.placeholder='перевод…';
+    ai.setAttribute("autocapitalize","sentences"); ai.setAttribute("autocorrect","on");
+    ai.setAttribute("spellcheck","true"); ai.setAttribute("inputmode","text");
     // iOS: track actual typed value before autocorrect substitution
     let _typedVal = '';
     ai.addEventListener('compositionstart', ()=>{ _typedVal = ai.value; });
